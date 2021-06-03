@@ -10,10 +10,11 @@
     "default_popup": "ui/popup.html"
   },
 
+
   "content_scripts": [{
     "matches": ["*://courses.students.ubc.ca/*"],
     "css": ["src/styles.css"],
-    "js": ["src/content.js"]
+    "js": ["src/main.js"]
   }],
 
   "permissions": [
