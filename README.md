@@ -13,7 +13,7 @@ so you don't have to do the busy work.
 Coming soon!
 ## TODO:
 
-- Finish implementing requests - requesting things from ratemyprofessors.com leads to a CORS error. Implement a proxy to fix this.
-- Scraping from RMP once the requests are done
+- Deserialise the JSON data collected from UBC Detective
+- Implement hover detection when hovering mouse over course link
 - Detection of professors from course selection page (Only detects course webpage at the moment, not selection page)
 - Beautify the code
