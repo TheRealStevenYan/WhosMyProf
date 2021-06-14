@@ -1,20 +1,18 @@
 {
-  "manifest_version": 2,
-
-  "name": "Who's my prof?",
+  "manifest_version": 3,
+  "name": "Who's My Prof?",
   "description": "An upcoming browser extension which will show RateMyProfessor ratings on UBC SSC course browser.",
-  "version": "0.0",
-
-  "browser_action": {
-    "default_icon": "ui/icon.png",
-    "default_popup": "ui/popup.html"
-  },
-
+  "version": "0.0.0",
 
   "content_scripts": [{
     "matches": ["*://courses.students.ubc.ca/*"],
     "css": ["src/styles.css"],
     "js": ["src/main.js"]
+  }],
+
+  "web_accessible_resources": [{
+    "resources": ["/src/data/data.json"],
+    "matches": ["*://courses.students.ubc.ca/*"]
   }],
 
   "permissions": [
