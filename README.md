@@ -13,7 +13,8 @@ so you don't have to do the busy work.
 Coming soon!
 ## TODO:
 
-- Deserialise the JSON data collected from UBC Detective
 - Implement hover detection when hovering mouse over course link
+    
+    - Then from there, add a pop-up window with the prof's name and RMP rating
 - Detection of professors from course selection page (Only detects course webpage at the moment, not selection page)
-- Beautify the code
+- Beautify the code (try modularising it even though manifest v3 hates this)

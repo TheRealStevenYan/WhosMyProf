@@ -94,8 +94,9 @@ class CoursePageModifier {
 
     // Adds the RMP score to the given instructor cell object.
     addRMPScore(instructorCell) {
-        let name = instructorCell.textContent
-        instructorCell.appendChild(document.createTextNode(' [' + profData[name].quality + ']'));
+        let name = instructorCell.textContent;
+        let qualityScore = profData[name].quality;
+        if (qualityScore) instructorCell.appendChild(document.createTextNode(' [' + qualityScore + ']'));
     }
 }
 
