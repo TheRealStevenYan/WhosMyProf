@@ -22,11 +22,13 @@ On the course web page:
 
 ![img.png](images/img_1.png)
 
-Above is without the extension, below is with the extension.
+The first image is without the extension, the second is with the extension.
 The professor's RMP quality rating is placed to the right of their name.
 When you hover over their quality rating with your cursor, more RMP information is shown:
 
 ![img_2.png](images/img_2.png)
+
+###More features to come!
 
 A work in progress.
 
