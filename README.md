@@ -28,7 +28,7 @@ When you hover over their quality rating with your cursor, more RMP information 
 
 ![img_2.png](images/img_2.png)
 
-###More features to come!
+### More features to come!
 
 A work in progress.
 
