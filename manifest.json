@@ -6,7 +6,6 @@
 
   "content_scripts": [{
     "matches": ["*://courses.students.ubc.ca/*"],
-    "css": ["src/styles.css"],
     "js": ["src/main.js"]
   }],
 

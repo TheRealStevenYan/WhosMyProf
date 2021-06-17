@@ -1,4 +1,4 @@
-main()
+main();
 
 let profData;
 
@@ -16,8 +16,13 @@ function main() {
                 let pageModifier = new CoursePageModifier();
                 pageModifier.addRMPScores();
             }
+            if (isCoursesPage(url)) {
+
+            }
         })
 }
+
+
 
 // Returns true if the given URL is a course section page.
 function isSectionsPage(url) {
@@ -31,10 +36,8 @@ function isCoursesPage(url) {
 
 // Helper function. Returns true if the given UBC page's tname == pageType.
 function isPage(url, pageType) {
-    let bool = new URLSearchParams(url).get("tname") == pageType;
-    return bool;
+    return new URLSearchParams(url).get("tname") === pageType;
 }
-
 
 
 
@@ -46,17 +49,62 @@ class CoursePageModifier {
     Call addRMPScores() to modify the web page and add the RateMyProfessor scores next to the professor names.
      */
     constructor() {
-        this.instructorTable = this.getInstructorTable();
-        this.instructorCells = this.getInstructorCells();
+        this.instructorTable = document.getElementsByClassName('table')[2];
+        this.instructorCells = this.#getInstructorCells();
     }
 
-    // Returns a raw table from the section page containing the instructors' names.
-    getInstructorTable() {
-        return document.getElementsByClassName('table')[2];
+    // Adds RMP scores to every cell in the given instructor cell array.
+    addRMPScores() {
+        for (let i = 0; i < this.instructorCells.length; i++) {
+            this.#addRMPScore((this.instructorCells)[i]);
+        }
     }
 
-    // Returns an array containing the cells representing the list of professors from UBC's course website.
-    getInstructorCells() {
+    // Adds an RMP score element to the given instructor cell object.
+    #addRMPScore(instructorCell) {
+        let name = instructorCell.textContent;
+
+        instructorCell.appendChild(this.#getRMPScoreElement(name));
+        try {
+            instructorCell.appendChild(this.#getPopUpWindow(name));
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // Given a prof name, returns a pop up window containing information about the prof from src/data/data.json
+    // How it works: It's an invisible HTML div element, with an ID equal to name. Show this element by changing its
+    // style.display to 'block', and hide it by changing the style.display back to 'none'.
+    #getPopUpWindow(name) {
+        let popUpWindow = document.createElement('div');
+        popUpWindow.id = name;
+        popUpWindow.style.display = 'none';
+        popUpWindow.innerHTML = 'Overall Quality:  ' + profData[name].quality     + '<br>' +
+                                'Difficulty:       ' + profData[name].difficulty  + '<br>' +
+                                'Would take again: ' + profData[name].takeAgain   + '<br>' +
+                                'Based on:         ' + profData[name].numRatings  + '<br>';
+        return popUpWindow;
+    }
+
+    // Given a prof name, returns a text element containing the prof's RMP quality score that, on mouse over, will
+    // reveal a popup window with deeper information about the prof.
+    // If src/data/data.json doesn't contain the prof's RMP quality score, return an element indicating no data.
+    #getRMPScoreElement(name) {
+        let rmpElement = document.createElement('strong');
+        try {
+            rmpElement.textContent = ' [' + profData[name].quality + ']';
+
+            rmpElement.addEventListener('mouseenter', () => document.getElementById(name).style.display = 'block');
+            rmpElement.addEventListener('mouseout', () => document.getElementById(name).style.display = 'none');
+        } catch {
+            rmpElement.textContent = ' [NO DATA]';
+        }
+
+        return rmpElement;
+    }
+
+    // Returns an array containing the table cell elements representing the list of professors from the UBC course page.
+    #getInstructorCells() {
         let noMoreProfs;
         let instructorCells = [];
 
@@ -68,10 +116,10 @@ class CoursePageModifier {
             for (let j = 0; j < row.cells.length; j++) {
                 let cell = row.cells[j];
 
-                if (cell.textContent.replace(/\s/g, '') == 'Instructor:' ||
-                    cell.textContent.replace(/\s/g, '') == '') continue;
+                if (cell.textContent.replace(/\s/g, '') === 'Instructor:' ||
+                    cell.textContent.replace(/\s/g, '') === '') continue;
 
-                if (cell.textContent.replace(/\s/g, '') == 'TA:') {
+                if (cell.textContent.replace(/\s/g, '') === 'TA:') {
                     noMoreProfs = true;
                     break;
                 }
@@ -81,25 +129,6 @@ class CoursePageModifier {
         }
 
         return instructorCells;
-    }
-
-
-    // Adds RMP scores to every cell in the given instructor cell array.
-    // THIS IS A STUB FOR NOW. SUBJECT TO CHANGE LATER.
-    addRMPScores() {
-        for (let i = 0; i < this.instructorCells.length; i++) {
-            this.addRMPScore((this.instructorCells)[i]);
-        }
-    }
-
-    // Adds the RMP score to the given instructor cell object.
-    addRMPScore(instructorCell) {
-        let name = instructorCell.textContent
-        try {
-            instructorCell.appendChild(document.createTextNode(' [' + profData[name].quality + ']'));
-        } catch (e) {
-            console.log(e);
-        }
     }
 }
 
