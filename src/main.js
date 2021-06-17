@@ -17,7 +17,7 @@ function main() {
                 pageModifier.addRMPScores();
             }
             if (isCoursesPage(url)) {
-
+                let pageModifier = new SectionsPageModifier();
             }
         })
 }
@@ -39,6 +39,11 @@ function isPage(url, pageType) {
     return new URLSearchParams(url).get("tname") === pageType;
 }
 
+
+class SectionsPageModifier {
+
+
+}
 
 
 class CoursePageModifier {
@@ -81,8 +86,8 @@ class CoursePageModifier {
         popUpWindow.style.display = 'none';
         popUpWindow.innerHTML = 'Overall Quality:  ' + profData[name].quality     + '<br>' +
                                 'Difficulty:       ' + profData[name].difficulty  + '<br>' +
-                                'Would take again: ' + profData[name].takeAgain   + '<br>' +
-                                'Based on:         ' + profData[name].numRatings  + '<br>';
+                                'Would Take Again: ' + profData[name].takeAgain   + '<br>' +
+                                'Based On:         ' + profData[name].numRatings  + '<br>';
         return popUpWindow;
     }
 
